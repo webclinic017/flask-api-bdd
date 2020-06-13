@@ -16,7 +16,6 @@ def step_impl(context):
 
 @then('{key} should show on position {order}')
 def step_impl(context, key, order):
-    #print('index', list(context.stock.keys()).index(key))
     try:
         assert list(context.stock.keys()).index(key) == int(order)
     except AssertionError:
