@@ -7,7 +7,6 @@ def step_impl(context):
     url = 'http://127.0.0.1:5000/stocks'
     context.resp = requests.get(url)
 
-
 @when('observing a stock')
 def step_impl(context):
     context.stock=context.resp.json()[0]
@@ -16,16 +15,11 @@ def step_impl(context):
 
 @then('{key} should show on position {order}')
 def step_impl(context, key, order):
-    #print("This is the result:",context.resp.json())
-    print('index', list(context.stock.keys()).index(key))
     try:
         assert list(context.stock.keys()).index(key) == int(order)
     except AssertionError:
         print(f'Expected index {order}, but got {list(context.stock.keys()).index(key)}.')
         raise
-
-
-    assert list(context.stock.keys()).index(key) == int(order)
 
 
 

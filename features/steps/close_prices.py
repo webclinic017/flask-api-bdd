@@ -1,11 +1,4 @@
 from behave import *
-import requests
-
-
-# @given('API is up and running again')
-# def step_impl(context):
-#     url = 'http://127.0.0.1:5000'
-#     context.resp = requests.get(url)
 
 
 @when('observing close price')
