@@ -4,7 +4,7 @@ import requests
 
 @given('API is up and running')
 def step_impl(context):
-    url='http://127.0.0.1:5000/stocks'
+    url = 'http://127.0.0.1:5000/stocks'
     context.resp = requests.get(url)
 
 
