@@ -16,16 +16,12 @@ def step_impl(context):
 
 @then('{key} should show on position {order}')
 def step_impl(context, key, order):
-    #print("This is the result:",context.resp.json())
-    print('index', list(context.stock.keys()).index(key))
+    #print('index', list(context.stock.keys()).index(key))
     try:
         assert list(context.stock.keys()).index(key) == int(order)
     except AssertionError:
         print(f'Expected index {order}, but got {list(context.stock.keys()).index(key)}.')
         raise
-
-
-    assert list(context.stock.keys()).index(key) == int(order)
 
 
 
