@@ -16,6 +16,7 @@ class StockMarket():
 
     def fetch_all(self):
         """Fetch all available data"""
+        print("Fetching all data...")
         return self._fetch_data(REQ_ALL)
 
     def fetch_filtered(self, date_from, date_to):
@@ -24,7 +25,6 @@ class StockMarket():
         self.date_to = parser.parse(date_to).strftime("%Y-%m-%d")
         req_date = f'https://eodhistoricaldata.com/api/eod/AAPL.US?api_token=OeAFFmMliFG5orCUuwAKQ8l4WWFQ67YX&period=d.&from={self.date_from}&to={self.date_to}&fmt=json'
         print("Fetching filtered data...")
-        print(req_date)
         return self._fetch_data(req_date)
 
     def __repr__(self):
@@ -34,19 +34,17 @@ class StockMarket():
 def all_or_filtered():
     """This relates to Decide whether to fetch all stocks or filter on dates."""
     apple = StockMarket('AAPLUS')
+
     choice = input('Extract all available data from https://eodhistoricaldata.com for AAPL.US? Y/N: ')
 
     if choice.upper() == 'Y':
-        print("Fetching all data...")
         output = apple.fetch_all()
         print("Done.")
     else:
         print('Choose Filter Dates')
         input_from = input('Date from: ')
         input_to = input('Date to: ')
-        date_from = parser.parse(input_from).strftime("%Y-%m-%d")
-        date_to = parser.parse(input_to).strftime("%Y-%m-%d")
-        output = apple.fetch_filtered(date_from, date_to)
+        output = apple.fetch_filtered(input_from, input_to)
         print("Done.")
     return output
 
@@ -75,7 +73,7 @@ def home():
     """
 
 
-@api.route('/stocks')
+@api.route('/stocks', methods=['GET','POST'])
 def endpoint_filter():
     """Allow optional usage of date from - to filters, either individually or as a pair."""
 
