@@ -34,6 +34,7 @@ class StockMarket():
 def all_or_filtered():
     """This relates to Decide whether to fetch all stocks or filter on dates."""
     apple = StockMarket('AAPLUS')
+
     choice = input('Extract all available data from https://eodhistoricaldata.com for AAPL.US? Y/N: ')
 
     if choice.upper() == 'Y':
@@ -43,9 +44,7 @@ def all_or_filtered():
         print('Choose Filter Dates')
         input_from = input('Date from: ')
         input_to = input('Date to: ')
-        date_from = parser.parse(input_from).strftime("%Y-%m-%d")
-        date_to = parser.parse(input_to).strftime("%Y-%m-%d")
-        output = apple.fetch_filtered(date_from, date_to)
+        output = apple.fetch_filtered(input_from, input_to)
         print("Done.")
     return output
 
@@ -74,7 +73,7 @@ def home():
     """
 
 
-@api.route('/stocks')
+@api.route('/stocks', methods=['GET','POST'])
 def endpoint_filter():
     """Allow optional usage of date from - to filters, either individually or as a pair."""
 
