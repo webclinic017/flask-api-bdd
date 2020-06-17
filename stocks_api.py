@@ -1,12 +1,14 @@
 from flask import Flask, json, jsonify, request
 from dateutil import parser
+from datetime import datetime, timedelta
 import requests
+import csv
 
 
 REQ_ALL = 'https://eodhistoricaldata.com/api/eod/AAPL.US?api_token=OeAFFmMliFG5orCUuwAKQ8l4WWFQ67YX&fmt=json'
 
 class StockMarket():
-    def __init__(self, name):
+    def __init__(self, name='AAPLUS'):
         self.name = name
 
     def _fetch_data(self, req):
@@ -31,20 +33,34 @@ class StockMarket():
         return f'{self.name}'
 
 
+def store_dates(dfrom, dto):
+    dfrom=parser.parse(dfrom).strftime("%Y-%m-%d")
+    dto=parser.parse(dto).strftime("%Y-%m-%d")
+    with open('./var/initial_dates.csv', 'w') as f:
+        headers = ["Initial From", "Initial To"]
+        csv_writer = csv.DictWriter(f, fieldnames=headers)
+        csv_writer.writeheader()
+        csv_writer.writerow({
+            "Initial From": dfrom,
+            "Initial To": dto,
+        })
+
 def all_or_filtered():
     """This relates to Decide whether to fetch all stocks or filter on dates."""
-    apple = StockMarket('AAPLUS')
+    apple = StockMarket()
 
     choice = input('Extract all available data from https://eodhistoricaldata.com for AAPL.US? Y/N: ')
 
     if choice.upper() == 'Y':
         output = apple.fetch_all()
+        store_dates(dfrom='1980-12-11', dto=datetime.strftime(datetime.today() - timedelta(1), "%Y-%m-%d"))
         print("Done.")
     else:
         print('Choose Filter Dates')
         input_from = input('Date from: ')
         input_to = input('Date to: ')
         output = apple.fetch_filtered(input_from, input_to)
+        store_dates(input_from,input_to)
         print("Done.")
     return output
 
@@ -67,7 +83,7 @@ def home():
         <li>
             <h3>Query parameter usage:</h3>
             <p>Optional 'from' and 'to' query parameters are available</p>
-            <p>Examples: '/stocks?from=2019-04-10&to=2019-04-14' or '/stocks?from=2019-04-10' or '/stocks?to=2019-03-25'</p> 
+            <p>Examples: '/stocks?from=2019-04-10&to=2019-04-14' or '/stocks?from=2019-04-10' or '/stocks?to=2019-08-25'</p> 
         </li>
     </ul>
     """

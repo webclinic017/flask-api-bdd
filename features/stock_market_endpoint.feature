@@ -4,10 +4,12 @@ Feature: Endpoint listing stock market data
   I need an api containing historical stock market data
   In order to prepare accurate reports
 
-  Scenario: No ‘close’ prices can be zero or negative
-    Given API is up and running again
-    When observing close price
-    Then price must be greater than 0
+  @tbd
+  Scenario: Endpoint is built as per initial from/to dates
+    Given API is created
+    When viewing the endpoint
+    Then first available date is the initial From date
+    And last available date is the initial To date
 #
 #  Scenario Outline: Data order
 #    Given API is up and running
