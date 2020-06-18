@@ -43,6 +43,4 @@ def step_impl(context, date_to):
     else:          # if day is 6 (Saturday) or 7 (Sunday)
         nearest_date=dt_date_to - timedelta(days=dt_date_to.isoweekday() - 5)  # get nearest expected date
         str_nearest_date = nearest_date.strftime('%Y-%m-%d')    # convert back to string
-        print(str_nearest_date)
-        print(dt_date_to.isoweekday())
         assert context.stocks_to == str_nearest_date     # compare against nearest date

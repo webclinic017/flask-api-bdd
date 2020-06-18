@@ -59,9 +59,18 @@ def all_or_filtered():
         print('Choose Filter Dates')
         input_from = input('Date from: ')
         input_to = input('Date to: ')
+
+        #==== If one of the input dates is not entered  ============
+        if not input_from:
+            input_from = '1980-12-11'
+        if not input_to:
+            input_to = datetime.today().strftime("%Y-%m-%d")
+        #============================================================
+
         output = apple.fetch_filtered(input_from, input_to)
         store_dates(input_from,input_to)
         print("Done.")
+
     return output
 
 
