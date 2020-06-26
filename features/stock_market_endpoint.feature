@@ -4,7 +4,6 @@ Feature: Endpoint listing stock market data
   I need an api containing historical stock market data
   In order to prepare accurate reports
 
-  @tbd
   Scenario: Endpoint is built as per initial from/to dates
     Given API is created
     When viewing the endpoint
